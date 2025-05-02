@@ -7,6 +7,10 @@ import bcrypt from "bcryptjs";
 export const signup = async (req,res) =>{
     const {fullName,email,password}= req.body
     try {
+        if(!fullName || !email || !password) {
+            return res.status(400).json({message:"Please provide all the fields"})
+        }
+
      if (password.length < 6) {
         return res.status(400).json({message:"Password must be at least 6 characters"});
      }
@@ -21,7 +25,7 @@ export const signup = async (req,res) =>{
      const newUser = new User({
         fullName,
         email,
-        password: hashedPassword
+        password:hashedPassword
      })
 
      if(newUser) {
